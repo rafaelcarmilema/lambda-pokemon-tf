@@ -6,5 +6,5 @@ terraform {
   }
 }
 module "lib" {
-  source = "../../lib/main"
+  source = "../lib"
 }
