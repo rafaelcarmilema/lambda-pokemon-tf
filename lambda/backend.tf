@@ -5,3 +5,6 @@ terraform {
     region = "us-east-1"
   }
 }
+module "lib" {
+  source = "../../lib/main"
+}
