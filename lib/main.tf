@@ -2,8 +2,8 @@ data "terraform_remote_state" "iam_tf" {
   backend = "s3"
 
   config = {
-    bucket = "lambda-pokemon-tf"
-    key    = "iam/terraform.tfstate"
+    bucket = "terraform-projects-bk"
+    key    = "lambda-pokemon-tf/iam/terraform.tfstate"
     region = "us-east-1"
   }
 }
