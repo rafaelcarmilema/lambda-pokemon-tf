@@ -23,7 +23,8 @@ def iterate_json(data):
 
 def lambda_handler(event, context):
     data = call_api()
-    iterate_json(data)
+    return  iterate_json(data)
+
     # Get the object from the event and show its content type
     # bucket = event['Records'][0]['s3']['bucket']['name']
     # key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
