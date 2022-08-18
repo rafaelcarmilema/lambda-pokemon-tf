@@ -4,7 +4,7 @@ resource "aws_lambda_function" "test_lambda" {
   filename      = "../appcode/bundle/my_bundle.zip"
   function_name = "lambda_function_pokemon"
   role          = module.lib.lambda_role
-  handler       = "main.py"
+  handler       = "main.lambda_handler"
   description = "GET request to pokemon api and send an email via SNS to sub users with random pokemon facts"
   # The filebase64sha256() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the base64sha256() function and the file() function:
