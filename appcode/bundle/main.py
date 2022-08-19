@@ -22,10 +22,10 @@ def call_api_random_pokefact(random_pokemon):
     response = requests.get(api_url)
     json_file = response.json()
     
-    id = print(json_file["id"])
-    name = print(json_file["name"])
-    height = print(json_file["height"])
-    weight = print(json_file["weight"])
+    id = str(json_file["id"])
+    name = json_file["name"]
+    height = str(json_file["height"])
+    weight = str(json_file["weight"])
     #data = json_file['results']
     return [id,name,height,weight]
 
@@ -38,39 +38,51 @@ def iterate_json(data):
 def lambda_handler(event, context):
     client = boto3.client('sns')
 
-    random_pokemon = str(randrange(1,95)) # generate random pokemon 
-    print(random_pokemon)
+    random_pokemon = str(randrange(1,95)) # generate random pokemon
     ##Call api and get pokemon info from a random pokemon
     data = call_api_random_pokefact(random_pokemon)
-    #data = call_api()
 
+    print("some data name")
+    print(data)
+    print("name "+data[1])
     #Generate the message and publish to sns topic
     response = client.publish(
     TopicArn='arn:aws:sns:us-east-1:205758311321:pokemon-fun-facts-topic',
-    Message='Random Pokemon of the day is:\n'
-            'name:'+data[1]+'\n'
-            'id:'+data[0]+'\n'
-            'height:'+data[2]+'\n'
-            'weight:'+data[3]+'\n' ,
+    Message='Random Pokemon of the day is '+data[1]+'\n'\
+            'name:'+data[1]+'\n'\
+            'id:'+data[0]+'\n'\
+            'height:'+data[2]+'\n'\
+            'weight:'+data[3]+'\n',
     Subject='Random Poke Facts',
     MessageStructure='string',
     MessageAttributes={
         'string': {
-            'DataType': 'string',
-            'StringValue': 'string',
-            'BinaryValue': b'bytes'
+            'DataType': 'String',
+            'StringValue': data[0]
+        },
+        'string2': {
+            'DataType': 'String',
+            'StringValue': data[1]
+        },
+        'string3': {
+            'DataType': 'String',
+            'StringValue': data[2]
+        },
+        'string4': {
+            'DataType': 'String',
+            'StringValue': data[3]
         }
     },
 )
-    return  iterate_json(data)
+    return
 
 
 
 ####################### MAIN #########################
 
-random_pokemon = str(randrange(1,95)) # generate random pokemon 
-print(random_pokemon)
-data = call_api_random_pokefact(random_pokemon)
+# random_pokemon = str(randrange(1,95)) # generate random pokemon 
+# print(random_pokemon)
+# data = call_api_random_pokefact(random_pokemon)
 
 # data = call_api()
 # iterate_json(data)
