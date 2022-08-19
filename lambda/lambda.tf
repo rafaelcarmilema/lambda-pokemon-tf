@@ -19,3 +19,16 @@ resource "aws_lambda_function" "test_lambda" {
 #     }
 #   }
 }
+
+resource "aws_lambda_function_event_invoke_config" "sns_pub" {
+  function_name = aws_lambda_function.test_lambda.function_name
+
+  destination_config {
+    on_failure {
+    }
+
+    on_success {
+      destination = "arn:aws:sns:us-east-1:205758311321:pokemon-fun-facts-topic"
+    }
+  }
+}
