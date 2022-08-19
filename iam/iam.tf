@@ -23,7 +23,7 @@ resource "aws_iam_role_policy" "test_policy" {
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
-  policy = <<EOF
+  policy = jsonencode(
     {
     "Version": "2012-10-17",
     "Statement": [
@@ -36,9 +36,10 @@ resource "aws_iam_role_policy" "test_policy" {
         "Resource": "arn:aws:lambda:us-east-1:205758311321:function:lambda_function_pokemon"
         }
       ]
-    }
-  EOF
+    })
 }
+
+// output for iam arn
 output "lambda_role" {
   value = aws_iam_role.iam_for_lambda.arn
 }
